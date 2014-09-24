@@ -10,6 +10,7 @@ int main()
 	FordFulkerson ff("input.txt");
 	ff.run(0,5);
 	ff.print();
+	//DiGraph test("1 1 1 1 \n 1 1 1 1 \n 1 1 1 1 \n 2 2 2 2");
 
 	return 0;
 }

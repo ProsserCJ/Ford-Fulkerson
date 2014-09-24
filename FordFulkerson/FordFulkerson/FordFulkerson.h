@@ -5,19 +5,70 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 using std::vector;
+
+struct Node;
+struct Edge;
+
+struct Edge	{
+	Edge(Node* start, Node* end, float capacity)
+	{
+		this->start = start;
+		this->end = end;
+		this->capacity = capacity;
+		throughPut = 0;
+	};
+	Node* start;
+	Node* end;
+	float capacity;
+	float throughPut;
+
+};
 
 struct Node {
 	Node(int num) {
 		this->num = num;
 	};
+	void addEdge(Node* a, float capacity)
+	{
+		edges.push_back(Edge(this, a, capacity));
+	}
 	int num;
+	vector<Edge> edges;
 };
 
 class DiGraph {
 public:
-	DiGraph(char* input) {}
+	DiGraph(char* input)
+	{
+		std::stringstream in(input);
+		vector<float> capacites;
+		int nodeCount = 0;
+		while(!in.eof())
+		{
+			float c = 0;
+			in >> c;
+			capacites.push_back(c);
+		}
+		nodeCount = sqrt(capacites.size());
+		for(int i(0); i < nodeCount; i++)
+		{
+			nodes.push_back(Node(i));
+		}
+		for(int i(0); i < capacites.size(); i++)
+		{
+			int start = static_cast<int>(i/nodeCount);
+			int end = i%nodeCount;
+			if(capacites[i] > 0 && start != end)
+			{
+				nodes[start].addEdge(&nodes[end], capacites[i]);
+			}
+		}
+	}
+
+	vector<Node> nodes;
 
 };
 
