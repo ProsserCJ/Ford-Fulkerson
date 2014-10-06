@@ -102,5 +102,4 @@ private:
 
 	DiGraph graph;
 	int source, sink;
-
 };
