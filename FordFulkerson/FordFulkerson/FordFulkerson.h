@@ -64,12 +64,34 @@ public:
 			if(capacites[i] > 0 && start != end)
 			{
 				nodes[start].addEdge(&nodes[end], capacites[i]);
+				edges.push_back(nodes[start].edges.at(nodes[start].edges.size()-1));
 			}
+		}
+	}
+	DiGraph(char* input, bool simple)
+	{
+		std::stringstream in(input);
+		int nodeCount = 0;
+		in >> nodeCount;
+		for(int i(0); i < nodeCount; i++)
+		{
+			nodes.push_back(Node(i));
+		}
+		while(!in.eof())
+		{
+			int start = 0;
+			int end = 0;
+			int size = 0;
+			in >> start;
+			in >> end;
+			in >> size;
+			nodes[start].addEdge(&nodes[end], size);
+			edges.push_back(nodes[start].edges.at(nodes[start].edges.size()-1));
 		}
 	}
 
 	vector<Node> nodes;
-
+	vector<Edge> edges;
 };
 
 class FordFulkerson{
