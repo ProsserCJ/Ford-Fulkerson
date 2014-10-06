@@ -103,6 +103,7 @@ public:
 			the path of a text file in which the digraph is specified
 	*/
 	FordFulkerson(char* input);
+	FordFulkerson(char* input, bool simple);
 
 	/**
 		Run the Ford Fulkerson algorithm on the digraph, with flow going from the source to the sink
@@ -119,9 +120,13 @@ public:
 	*/
 	void print();
 
-private:
-	vector<vector<Node> > findAllAugmentingPaths();
+	
 
+//private:
+	vector<vector<Node> > findAllAugmentingPaths();
+	
 	DiGraph graph;
 	int source, sink;
+	int totalThroughput;
+	
 };

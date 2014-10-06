@@ -4,13 +4,28 @@
 */
 
 #include "FordFulkerson.h"
+#include <fstream>
+#include <string>
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::string;
 
 int main()
 {
-	FordFulkerson ff("input.txt");
-	ff.run(0,5);
+	ifstream fin("input.txt");
+	char a;
+	string final = "";
+	while(!fin.eof()) {
+		fin.get(a);
+		final += a;
+	}
+	char* cStr = (char*)final.c_str();
+	FordFulkerson ff(cStr, true);
+
+	ff.run(0,3);
 	ff.print();
-	//DiGraph test("1 1 1 1 \n 1 1 1 1 \n 1 1 1 1 \n 2 2 2 2");
 
 	return 0;
 }
