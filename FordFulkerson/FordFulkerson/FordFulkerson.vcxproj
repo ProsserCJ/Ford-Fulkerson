@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -78,11 +79,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DiGraph.h" />
     <ClInclude Include="FordFulkerson.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DiGraph.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="FordFulkerson.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestCases\AnswersToTestCases.txt" />
+    <Text Include="TestCases\TestCase0.txt" />
+    <Text Include="TestCases\TestCase1.txt" />
+    <Text Include="TestCases\TestCase2.txt" />
+    <Text Include="TestCases\TestCase3.txt" />
+    <Text Include="TestCases\TestCase4.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

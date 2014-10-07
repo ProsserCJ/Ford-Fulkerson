@@ -42,8 +42,14 @@ public:
 
 	/**
 		Print the results of the Ford Fulkerson algorithm on the digraph, including the capacities along each path
+		
+		@param startTime
+			The time when computation began 
 	*/
-	void print();
+	void print(int startTime);
+
+	int edgeCount() {return graph.getEdgeCount();}
+	int vertexCount() {return graph.getNodeCount();}
 
 private:
 	vector<Edge*> augmentedPath();

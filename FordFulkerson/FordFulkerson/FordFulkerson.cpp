@@ -66,7 +66,10 @@ void FordFulkerson::run(int source, int sink) {
 	}
 }
 
-void FordFulkerson::print() {
+void FordFulkerson::print(int startTime) {
+	cout << "Edges: " << edgeCount() << " Nodes " << vertexCount() << "\n";
+	cout << "Time: " << (clock() - startTime)/(double)CLOCKS_PER_SEC << " seconds.\n";
+		
 	cout << "Total throughput making it from source to sink: " << totalThroughput << endl << endl;
 	cout << setw(13) << "Node 1" << setw(13) << "Node 2" << setw(20) << "Flow / Capacity" << endl;
 	for(int i=0; i<graph.edges.size()-1; ++i) {

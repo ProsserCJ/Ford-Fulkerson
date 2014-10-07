@@ -18,6 +18,9 @@
     <ClInclude Include="FordFulkerson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DiGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FordFulkerson.cpp">
@@ -26,5 +29,28 @@
     <ClCompile Include="driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DiGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestCases\AnswersToTestCases.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="TestCases\TestCase0.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="TestCases\TestCase1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="TestCases\TestCase2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="TestCases\TestCase3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="TestCases\TestCase4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

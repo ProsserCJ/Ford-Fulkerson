@@ -69,6 +69,9 @@ public:
 	*/
 	DiGraph(char* input, bool simple);
 
+	int getNodeCount() {return nodes.size();}
+	int getEdgeCount() {return edges.size();}
+
 	vector<Node> nodes;
 	vector<Edge> edges;
 };

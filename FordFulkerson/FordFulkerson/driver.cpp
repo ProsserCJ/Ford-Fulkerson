@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <ctime>
 
 using std::cout;
 using std::endl;
@@ -17,7 +18,7 @@ using std::stringstream;
 
 int main()
 {
-	for(int i = 0; i < 5; ++i)
+	for(int i = 0; i < 6; ++i)
 	{
 		stringstream ss;
 		string s;
@@ -31,10 +32,14 @@ int main()
 			final += a;
 		}
 		char* cStr = (char*)final.c_str();
+		clock_t start = clock();
 		FordFulkerson ff(cStr, true);
-
+		
 		ff.run(0,1);
-		ff.print();
+		
+		ff.print(start);		
+		
 	}
+	std::cin.get();
 	return 0;
 }
