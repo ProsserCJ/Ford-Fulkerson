@@ -117,6 +117,27 @@ vector<vector<Node> > FordFulkerson::findAllAugmentingPaths() {
 					top.erase(top.begin()+top.size()-1);
 				}
 			}
+			//check all the backwards paths from the node
+			for(int i=0; i<graph.edges.size(); ++i) {
+				if(graph.edges[i].end->num == top[top.size()-1].num) {
+					Edge e = graph.edges[i];
+					Node next = *(e.start);
+
+					//check if the next node has already been visited
+					bool visited = false;
+					for(int j=0; j<top.size(); ++j) {
+						if(top[j].num == next.num) {
+							visited = true;
+						}
+					}
+			
+					if(!visited) {
+						top.push_back(next);
+						horizon.push(top);
+						top.erase(top.begin()+top.size()-1);
+					}
+				}
+			}
 		}
 	}
 

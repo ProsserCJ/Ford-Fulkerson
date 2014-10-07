@@ -24,7 +24,7 @@ int main()
 	char* cStr = (char*)final.c_str();
 	FordFulkerson ff(cStr, true);
 
-	ff.run(0,3);
+	ff.run(0,1);
 	ff.print();
 
 	return 0;
