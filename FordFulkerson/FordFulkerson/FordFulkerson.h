@@ -123,8 +123,8 @@ public:
 	
 
 //private:
-	vector<vector<Node> > findAllAugmentingPaths();
-	
+	vector<Node*> augmentedPath();
+
 	DiGraph graph;
 	int source, sink;
 	int totalThroughput;
