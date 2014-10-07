@@ -12,11 +12,6 @@ using std::cout;
 using std::endl;
 using std::queue;
 
-FordFulkerson::FordFulkerson(char* input) : graph(DiGraph(input)) {
-}
-FordFulkerson::FordFulkerson(char* input, bool simple) : graph(DiGraph(input,simple)) {
-}
-
 void FordFulkerson::run(int source, int sink) {
 	this->source = source;
 	this->sink = sink;
