@@ -41,7 +41,32 @@ struct Node {
 
 class DiGraph {
 public:
+	/**
+		Constructs a digraph from a given string of input
+
+		@param input
+			The string of input specifying information about the digraph. The information should be in the form of an n x n matrix,
+			where there are n nodes in the graph. A 0 represents no edge between the nodes, and a number other than 0 represents a
+			weighted edge between the nodes. Example:
+				00001
+				11001
+				00001
+				11100
+				00000
+	*/
 	DiGraph(char* input);
+
+	/**
+		Constructs a digraph from a given string of input
+
+		@param input
+			The string of input specifying information about the digraph. The first line should contain the number of nodes, and
+			each line after that should specify an edge (using three numbers: start node, end node, edge weight). Example:
+				6
+				0 1 10
+				2 3 15
+				0 3 25
+	*/
 	DiGraph(char* input, bool simple);
 
 	vector<Node> nodes;

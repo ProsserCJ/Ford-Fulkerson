@@ -21,34 +21,35 @@ void FordFulkerson::run(int source, int sink) {
 		graph.edges[i].throughPut = 0;
 	}
 
-	vector<Node*> path = augmentedPath();
+	vector<Edge*> path = augmentedPath();
 	while(path.size() != 0) {
 		//calculate min flow among all the edges in the path
 		int minFlow = -1;
-		vector<Edge*> edgesInPath;
-		for(int i=0; i<path.size()-1; ++i) {
-			for(int j=0; j<graph.edges.size(); ++j) {
-				if(graph.edges[j].start->num == path[i]->num && graph.edges[j].end->num == path[i+1]->num) { //forwards edge
-					edgesInPath.push_back(&graph.edges[j]);
-					int residualCapacity = graph.edges[j].capacity - graph.edges[j].throughPut;
-					if(minFlow == -1 || residualCapacity < minFlow) {
-						minFlow = residualCapacity;
-					}
-				} else if(graph.edges[j].end->num == path[i]->num && graph.edges[j].start->num == path[i+1]->num) { //backwards edge
-					edgesInPath.push_back(&graph.edges[j]);
-					if(minFlow == -1 || graph.edges[j].throughPut < minFlow) {
-						minFlow = graph.edges[j].throughPut;
-					}
+		int currentNodeNumber = source;
+		for(int i=0; i<path.size(); ++i) {
+			if(path[i]->start->num == currentNodeNumber) { //forwards edge
+				int residualCapacity = path[i]->capacity - path[i]->throughPut;
+				if(minFlow == -1 || residualCapacity < minFlow) {
+					minFlow = residualCapacity;
 				}
+				currentNodeNumber = path[i]->end->num;
+			} else if(path[i]->end->num == currentNodeNumber) { //backwards edge
+				if(minFlow == -1 || path[i]->throughPut < minFlow) {
+					minFlow = path[i]->throughPut;
+				}
+				currentNodeNumber = path[i]->start->num;
 			}
 		}
 
 		//add the flow to all the edges
-		for(int i=0; i<path.size()-1; ++i) {
-			if(edgesInPath[i]->start->num == path[i]->num) { //forwards path
-				edgesInPath[i]->throughPut += minFlow;
+		currentNodeNumber = source;
+		for(int i=0; i<path.size(); ++i) {
+			if(path[i]->start->num == currentNodeNumber) { //forwards path
+				path[i]->throughPut += minFlow;
+				currentNodeNumber = path[i]->end->num;
 			} else { //backwards edge
-				edgesInPath[i]->throughPut -= minFlow;
+				path[i]->throughPut -= minFlow;
+				currentNodeNumber = path[i]->start->num;
 			}
 		}
 
@@ -75,62 +76,62 @@ void FordFulkerson::print() {
 	cout << endl;
 }
 
-vector<Node*> FordFulkerson::augmentedPath() {
+vector<Edge*> FordFulkerson::augmentedPath() {
 	struct SearchInfo {
-		vector<Node*> startingPath;
+		vector<Edge*> startingPath;
 		vector<bool> vertexInPath;
+		Node* lastNode;
 	};
 
 	vector<bool> startingVertexInPath(graph.nodes.size(),false);
-	vector<Node*> startingPath;
-	startingPath.push_back(&graph.nodes[source]);
+	vector<Edge*> startingPath;
 	startingVertexInPath[source] = true;
 
 	queue<SearchInfo> horizon;
 	SearchInfo startingInfo;
 	startingInfo.startingPath = startingPath;
 	startingInfo.vertexInPath = startingVertexInPath;
+	startingInfo.lastNode = &graph.nodes[source];
 	horizon.push(startingInfo);
 
 	while(!horizon.empty()) {
 		SearchInfo top = horizon.front();
 		horizon.pop();
-		Node* lastNode = top.startingPath[top.startingPath.size()-1];
 
-		if(lastNode->num == sink) {
-			/*cout << "Path: ";
-			for(int i=0; i<top.startingPath.size(); ++i) {
-				cout << top.startingPath[i]->num << " ";
-			}
-			cout << endl;*/
+		if(top.lastNode->num == sink) {
 			return top.startingPath;
 		}
 
+		Node* savedLastNode = top.lastNode;
+
 		//examine all adjacent edges
 		for(int i=0; i<graph.edges.size(); ++i) {
-			if(graph.edges[i].start->num == lastNode->num) { //forwards edge
+			if(graph.edges[i].start->num == top.lastNode->num) { //forwards edge
 				Node* endNode = graph.edges[i].end;
 				int residualCapacity = graph.edges[i].capacity - graph.edges[i].throughPut;
 				if(residualCapacity > 0 && top.vertexInPath[endNode->num] == false) {
 					top.vertexInPath[endNode->num] = true;
-					top.startingPath.push_back(endNode);
+					top.startingPath.push_back(&graph.edges[i]);
+					top.lastNode = &graph.nodes[graph.edges[i].end->num];
 					horizon.push(top);
 					top.vertexInPath[endNode->num] = false;
 					top.startingPath.erase(top.startingPath.begin() + top.startingPath.size()-1);
+					top.lastNode = savedLastNode;
 				}
-			} else if(graph.edges[i].end->num == lastNode->num) { //backwards edge
+			} else if(graph.edges[i].end->num == top.lastNode->num) { //backwards edge
 				Node* endNode = graph.edges[i].start;
 				if(graph.edges[i].throughPut > 0 && top.vertexInPath[endNode->num] == false) {
 					top.vertexInPath[endNode->num] = true;
-					top.startingPath.push_back(endNode);
+					top.startingPath.push_back(&graph.edges[i]);
+					top.lastNode = &graph.nodes[graph.edges[i].start->num];
 					horizon.push(top);
 					top.vertexInPath[endNode->num] = false;
 					top.startingPath.erase(top.startingPath.begin() + top.startingPath.size()-1);
+					top.lastNode = savedLastNode;
 				}
 			}
 		}
 	}
 
-	//cout << "No more augmenting paths" << endl;
-	return vector<Node*>();
+	return vector<Edge*>();
 }

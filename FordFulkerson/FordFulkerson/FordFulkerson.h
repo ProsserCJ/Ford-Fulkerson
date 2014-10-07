@@ -46,7 +46,7 @@ public:
 	void print();
 
 private:
-	vector<Node*> augmentedPath();
+	vector<Edge*> augmentedPath();
 
 	DiGraph graph;
 	int source, sink;
