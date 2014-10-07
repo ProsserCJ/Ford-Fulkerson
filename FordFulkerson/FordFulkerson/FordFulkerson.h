@@ -52,7 +52,7 @@ public:
 			in >> c;
 			capacites.push_back(c);
 		}
-		nodeCount = sqrt(capacites.size());
+		nodeCount = int(sqrt(float(capacites.size()))+.000001);
 		for(int i(0); i < nodeCount; i++)
 		{
 			nodes.push_back(Node(i));
